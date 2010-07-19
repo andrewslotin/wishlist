@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Ваши обещания</title>
+  </head>
+  <body>
+    {% include "navigation.html" %}
+    <hr/>
+	{% if promises %}
+		<ol class="wishes">
+			{% for w in promises %}
+				<li class="wish">
+					{{ w.wish|linebreaksbr }} 
+					<span class="wish-author"> обещано <a class="wish-author-name" href="/wishlist?user={{ w.owner.user.email }}">{{ w.owner.user.nickname }}</a></span>
+					[<a class="promise-link" href="/revoke?wish={{ w.key }}">отказаться</a>]
+				</li>
+			{% endfor %}
+		</ol>
+	{% else %}
+		<p class="error">Вы не давали обещаний. Некоторые даже считают, что это правильно.</p>
+	{% endif %}
+  </body>
+</html>

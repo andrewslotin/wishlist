@@ -1,0 +1,20 @@
+﻿<html>
+	<head>
+		<script type="text/javascript" src="js/uki.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+		//<![CDATA[
+			//uki({ view: 'List', rect: '0 0 320 480', data: [], id: 'wishlist' }).attachTo( document.body );
+			$.ajax({
+				url:  'http://127.0.0.1:8080/api/wishes', 
+				data: { user: 'test@example.com' }, 
+				success: function (data) {
+					console.log(data);
+				}
+			});
+		//]]>
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
