@@ -1,58 +1,77 @@
 <html>
   <head>
+    {% include "_styles.html" %}
     <title>
         Список желаний{% if not is_owner %} {{ wishlist_user.user.nickname }}{% endif %}
     </title>
   </head>
   <body>
     {% include "navigation.html" %}
-    <hr/>
-    <h1>
-        {% if is_owner %}
-            Мой список желаний
-        {% else %}
-            Список желаний {{ wishlist_user.user.nickname }}
-        {% endif %}
-    </h1>
-	{% if wishes %}
-		<ol class="wishes">
-			{% if not current_user or is_owner %}
-				{% for w in wishes %}
-					<li class="wish">
-						{{ w.wish|linebreaksbr }} 
-						<span class="wish-date">({{ w.date }})</span> 
-						<span class="promises-count">({% ifequal w.promises_count 0 %}Еще никто не взялся{% else %}обещаний: {{ w.promises_count }}{% endifequal %})</span>
-						{% if is_owner %}<span class="remove-link">[<a href="/remove?wish={{ w.key }}">не хочу</a>]</span>{% endif %}
-					</li>
-				{% endfor %}
+    <script type="text/javascript">
+    	var data = [
+    		{% for w in wishes %}
+    		'{{ w.wish }}', 
+    		{% endfor %}
+    		''
+    	];
+    	data.pop();
+    	
+    	uki({
+    		view: 'List',
+    		rect: '0 60 480 100',
+    		data: data
+    	}).attachTo(window);
+    </script>
+    <!--
+    <div id="content">
+		  <h1>
+		      {% if is_owner %}
+		          Мой список желаний
+		      {% else %}
+		          Список желаний {{ wishlist_user.user.nickname }}
+		      {% endif %}
+		  </h1>
+			{% if wishes %}
+				<ol class="wishes">
+					{% if not current_user or is_owner %}
+						{% for w in wishes %}
+							<li class="wish">
+								{{ w.wish|linebreaksbr }} 
+								<span class="wish-date">({{ w.date }})</span> 
+								<span class="promises-count">({% ifequal w.promises_count 0 %}Еще никто не взялся{% else %}обещаний: {{ w.promises_count }}{% endifequal %})</span>
+								{% if is_owner %}<span class="remove-link">[<a href="/remove?wish={{ w.key }}">не хочу</a>]</span>{% endif %}
+							</li>
+						{% endfor %}
+					{% else %}
+						{% for w in wishes %}
+							<li class="wish">
+								{{ w.wish|linebreaksbr }} 
+								<span class="wish-date">({{ w.date }})</span> 
+								[<a class="promise-link" href="/{% if w.promised %}revoke{% else %}promise{% endif %}?wish={{ w.key }}">{% if w.promised %}отказаться{% else %}выполнить{% endif %}</a>]
+								<span class="promises-count">({% ifequal w.promises_count 0 %}Еще никто не взялся{% else %}обещаний: {{ w.promises_count }}{% endifequal %})</span>
+							</li>
+						{% endfor %}
+					{% endif %}
+				</ol>
 			{% else %}
-				{% for w in wishes %}
-					<li class="wish">
-						{{ w.wish|linebreaksbr }} 
-						<span class="wish-date">({{ w.date }})</span> 
-						[<a class="promise-link" href="/{% if w.promised %}revoke{% else %}promise{% endif %}?wish={{ w.key }}">{% if w.promised %}отказаться{% else %}выполнить{% endif %}</a>]
-						<span class="promises-count">({% ifequal w.promises_count 0 %}Еще никто не взялся{% else %}обещаний: {{ w.promises_count }}{% endifequal %})</span>
-					</li>
-				{% endfor %}
+				<p class="error">
+					{% if is_owner %}
+						Вы пока что не добавили ни одного желания в свой список.
+					{% else %}
+						Пользователь еще не добавил ни одного желания в список.
+					{% endif %}
+				</p>
 			{% endif %}
-		</ol>
-	{% else %}
-		<p class="error">
-			{% if is_owner %}
-				Вы пока что не добавили ни одного желания в свой список.
-			{% else %}
-				Пользователь еще не добавил ни одного желания в список.
-			{% endif %}
-		</p>
-	{% endif %}
-    {% if is_owner %}
-        <hr/>
-        <form action="" method="post">
-            <textarea cols="50" rows="4" name="new_wish" id="new_wish" value=""></textarea><br/>
-            <button type="submit">Хочу!</button>
-        </form>
-    {% else %}
-        {% if not current_user %}<hr/><p><a href="{{ signin_url }}">Войдте</a>, чтобы составить свой список желаний.</p>{% endif %}
-    {% endif %}
+		  {% if is_owner %}
+		      <hr/>
+		      <form action="" method="post">
+		          <textarea cols="50" rows="4" name="new_wish" id="new_wish" value=""></textarea><br/>
+		          <button type="submit">Хочу!</button>
+		      </form>
+		  {% else %}
+		      {% if not current_user %}<hr/><p><a href="{{ signin_url }}">Войдте</a>, чтобы составить свой список желаний.</p>{% endif %}
+		  {% endif %}
+	  </div>
+	  -->
   </body>
 </html>

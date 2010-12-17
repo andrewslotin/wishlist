@@ -1,5 +1,6 @@
-<ul class="top-nav">
-    {% if current_user %}<li><a href="/wishlist">Мой список желаний</a></li>{% endif %}
+<div id="top-nav">
+	<ul>
+    
     {% if current_user %}<li><a href="/promises">Мои обещания</a></li>{% endif %}
     <li><a href="/">Пользователи</a></li>
     {% if is_admin %}<li><a href="/dump" target="_blank">iddqd</a></li>{% endif %}
@@ -9,4 +10,5 @@
         {% else %}
         <a href="{{ signin_url }}">Вход</a>
         {% endif %}
-</ul>
+	</ul>
+</div>

@@ -4,5 +4,11 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /stylesheets
+  static_dir: css
+
+- url: /javascripts
+  static_dir: js
+
 - url: /.*
   script: wishlist.py

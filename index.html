@@ -1,19 +1,21 @@
 <html>
   <head>
+  	{% include "_styles.html" %}
     <title>Пользователи</title>
   </head>
   <body>
     {% include "navigation.html" %}
-    <hr/>
-    <h1>Пользователи</h1>
-	{% if users %}
-		<ul class="users">
-			{% for u in users %}
-				<li class="user"><a href="/wishlist?user={{ u.email }}">{{ u.nickname }}</li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p class="error">Странно, но никто ничего не хочет. Кроме вас, разумеется.</p>
-	{% endif %}
+    <div id="content">
+		  <h1>Пользователи</h1>
+			{% if users %}
+				<ul class="users">
+					{% for u in users %}
+						<li class="user"><a href="/wishlist?user={{ u.email }}">{{ u.nickname }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p class="error">Странно, но никто ничего не хочет. Кроме вас, разумеется.</p>
+			{% endif %}
+		</div>
   </body>
 </html>
